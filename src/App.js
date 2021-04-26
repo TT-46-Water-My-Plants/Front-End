@@ -1,7 +1,8 @@
 import React from "react";
+import Login from './login'
 
 function App() {
-	return <h1>Water my Plants</h1>;
+	return <Login/>;
 }
 
 export default App;
