@@ -5,11 +5,13 @@ import { PrivateRoute } from "./PrivateRoute";
 function App() {
 	return (
 		<Switch>
-			<Route path="/">
-				<div>
-					<h1>testing</h1>
-				</div>
-			</Route>
+			<Route
+				path="/"
+				component={() => {
+					window.location.href =
+						"https://marketing-page-tt46.vercel.app/";
+				}}
+			/>
 		</Switch>
 	);
 }

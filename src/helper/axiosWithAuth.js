@@ -5,6 +5,6 @@ export const axiosWithAuth = () => {
 		headers: {
 			Authorization: localStorage.getItem("token"),
 		},
-		baseURL: "url",
+		baseURL: "https://tt46-plants.herokuapp.com/",
 	});
 };
