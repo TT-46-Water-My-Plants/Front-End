@@ -9,13 +9,14 @@ const RenderBox=Styled.div`
     background-color: #49FCD4;
     width: 40%;
     margin: auto;
+    border-radius: 10%;
 `;
 const Info=Styled.div`
     color: #454848;
     font-weight: 4.5rem;
 `;
 
-function RenderPlants() {
+function RenderPlants(props) {
 
 
     return (
