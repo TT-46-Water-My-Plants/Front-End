@@ -17,10 +17,16 @@ function PlantForm() {
 
   return (
     <form className="form-container">
-      <div className="form-group inputs">
+      <div className="container form inputs">
         <label>
           Id
-          <input type="text" value={values.id} onChange={onChange} name="id" />
+          <input
+            type="text"
+            value={values.id}
+            onChange={onChange}
+            name="id"
+            placeholder="please enter ID here"
+          />
         </label>
 
         <label>
@@ -57,15 +63,11 @@ function PlantForm() {
         </label>
 
         <div className="submit">
-          <button>Submit</button>
+          <button class="btn-submit">Submit</button>
         </div>
       </div>
     </form>
   );
 }
-
-const Container = styled.div``;
-
-const Form = styled.form``;
 
 export default PlantForm;
