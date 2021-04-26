@@ -4,9 +4,13 @@
 	"private": true,
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.5.1",
+		"axios": "^0.21.1",
 		"react": "^16.6.1",
 		"react-dom": "^16.6.1",
-		"react-scripts": "2.1.1"
+		"react-redux": "^7.2.4",
+		"react-router-dom": "^5.2.0",
+		"react-scripts": "2.1.1",
+		"styled-components": "^5.2.3"
 	},
 	"scripts": {
 		"dev": "BROWSER=none react-scripts start",
