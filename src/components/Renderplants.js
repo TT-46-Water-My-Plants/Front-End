@@ -8,19 +8,35 @@ const RenderBox = Styled.div`
     flex-direction: row;
     justify-content: space-around;
     background-color: #49FCD4;
-    width: 40%;
+    width: 65%;
     margin: auto;
     border-radius: 12%;
 `;
 const Info = Styled.div`
     color: #454848;
     font-weight: 4.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space around;
+    .button-con{
+        display: flex;
+        flex-direction: row;
+        justicy-content: space-between;
+    }
+    .remove-plant{
+        background-color: black;
+        color: white;
+        padding: 2%;
+        margin: auto;
+    }
+    .edit-plant{
+        background-color: black;
+        color: white;
+        padding: 2%;
+        margin: auto;
+    }
 `;
-const Buttons = Styled.button`
-    background-color: black;
-    color: white;
-    padding: 2%;
-`;
+
 
 function RenderPlants(props) {
 	const plantList = useSelector((state) => state.plants.plantList);
@@ -30,24 +46,24 @@ function RenderPlants(props) {
         dispatch(fetchPlants())
     }, [])
 
-    useEffect(()=>{
-        dispatch(removePlant)
-    }, [])
-
-    useEffect(() => {
-        dispatch(editPlant)
-    }, [])
-    console.log(plantList);
-
+console.log(plantList);
 	return (
 		<RenderBox>
 			<Info>
-			{plantList.map((plants) => {
-                return 
+			{plantList.map((plant) => {
+                return ( 
+                    <div>
+                        <h4>{plant.species}</h4>
+                        <h5>{plant.nickname}</h5>
+                        <h5>{plant.h2oFrequency}</h5>
+                        <div className='button-con'>
+                            <button className='remove-plant'> Remove Plant </button>
+                            <button className='edit-plant'>Edit Plant</button>
+                        </div>
+                    </div>
+                )
             })}
 			</Info>
-            <Buttons>Remove Plant {removePlant} </Buttons>
-            <Buttons>Edit Plant {editPlant} </Buttons>
 		</RenderBox>
 	);
 }
