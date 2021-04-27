@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import Styled from "styled-components";
 import { fetchPlants, addPlant, removePlant, editPlant } from "../store/plants";
 import Header from "./Header";
@@ -19,8 +18,8 @@ const Info = Styled.div`
 `;
 
 function RenderPlants(props) {
-  const plantList = useSelector((state) => state.plants.plantList);
-  const dispatch = useDispatch();
+	// const plantList = useSelector((state) => state.plants.plantList);
+	// const dispatch = useDispatch();
 
   return (
     <>
