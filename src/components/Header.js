@@ -1,6 +1,12 @@
 import React from "react";
 
-<div class="header">
-  <button class="btn-logout">Logout</button>
-  <button class="btn-newplant">Add New Plant</button>
-</div>;
+const Header = () => {
+  return (
+    <header className="header">
+      <button className="btn-newplant">Add New Plant</button>
+      <button className="btn-logout">Logout</button>
+    </header>
+  );
+};
+
+export default Header;
