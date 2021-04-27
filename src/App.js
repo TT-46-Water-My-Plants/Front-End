@@ -4,6 +4,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import PlantForm from "./components/PlantForm";
 import RenderPlants from "./components/Renderplants";
 import Login from "./components/login";
+import Update from "./components/UpdateInfo"
 
 function App() {
   return (
