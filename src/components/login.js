@@ -80,7 +80,7 @@ const Login = () => {
 					<input
 						name="username"
 						value={username}
-						handleChange={handleChange}
+						onChange={handleChange}
 						placeholder="Username"
 					/>
 				</label>
@@ -90,7 +90,7 @@ const Login = () => {
 						name="password"
 						type="password"
 						value={password}
-						handleChange={handleChange}
+						onChange={handleChange}
 						placeholder="Password"
 					/>
 				</label>
@@ -99,7 +99,7 @@ const Login = () => {
 					<input
 						name="phoneNumber"
 						value={phoneNumber}
-						handleChange={handleChange}
+						onChange={handleChange}
 						placeholder="(123)456-7890"
 					/>
 				</label>
