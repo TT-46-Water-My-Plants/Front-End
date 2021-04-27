@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
+import { useForm } from "./hooks/useForm";
 
 const initialFormValues = {
 	id: "",
@@ -35,11 +36,7 @@ const Form = styled.form`
 `;
 
 function PlantForm() {
-	const [values, setValues] = useState(initialFormValues);
-
-	const onChange = (evt) => {
-		setValues({ ...values, [evt.target.name]: evt.target.value });
-	};
+	const [formVals, changeFormVals] = useForm(initialFormValues);
 
 	return (
 		<Form>
@@ -48,8 +45,8 @@ function PlantForm() {
 					Id
 					<input
 						type="text"
-						value={values.id}
-						onChange={onChange}
+						value={formVals.id}
+						onChange={changeFormVals}
 						name="id"
 						placeholder="please enter ID here"
 					/>
@@ -59,8 +56,8 @@ function PlantForm() {
 					Nickname
 					<input
 						type="text"
-						value={values.nickname}
-						onChange={onChange}
+						value={formVals.nickname}
+						onChange={changeFormVals}
 						name="nickname"
 						placeholder="type a nickname here"
 					/>
@@ -70,8 +67,8 @@ function PlantForm() {
 					Species
 					<input
 						type="text"
-						value={values.species}
-						onChange={onChange}
+						value={formVals.species}
+						onChange={changeFormVals}
 						name="species"
 						placeholder="input species here"
 					/>
@@ -81,15 +78,15 @@ function PlantForm() {
 					H20 Frequency
 					<input
 						type="text"
-						value={values.h2ofrequency}
-						onChange={onChange}
+						value={formVals.h2ofrequency}
+						onChange={changeFormVals}
 						name="h2ofrequency"
 						placeholder="input frequency here"
 					/>
 				</label>
 
 				<div className="submit">
-					<button class="btn-submit">Submit</button>
+					<button className="btn-submit">Submit</button>
 				</div>
 			</div>
 		</Form>

@@ -4,6 +4,7 @@ import { axiosWithAuth } from "../helper/axiosWithAuth";
 const slice = createSlice({
 	name: "auth",
 	initialState: {
+		loggedIn: false,
 		loading: false,
 		attemptMsg: {
 			success: true,
@@ -19,12 +20,15 @@ const slice = createSlice({
 		setAttemptMsg: (auth) => {},
 		login: (auth, action) => {
 			localStorage.setItem("token", action.payload);
+			auth.loggedIn = true;
 		},
 		register: (auth, action) => {
 			localStorage.setItem("token", action.payload);
+			auth.loggedIn = true;
 		},
 		logout: (auth) => {
 			localStorage.removeItem("token");
+			auth.loggedIn = false;
 		},
 	},
 });
@@ -32,12 +36,13 @@ const slice = createSlice({
 export const authLogin = (formVals) => (dispatch) => {
 	dispatch(setLoading());
 	axiosWithAuth()
-		.post("url", formVals)
+		.post("api/login", formVals)
 		.then((res) => {
 			dispatch(login(res.data.token));
 			dispatch(setLoading());
 		})
 		.catch((err) => {
+			console.log({ err });
 			dispatch(setAttemptMsg({}));
 			dispatch(setLoading());
 		});
@@ -46,12 +51,13 @@ export const authLogin = (formVals) => (dispatch) => {
 export const authRegister = (formVals) => (dispatch) => {
 	dispatch(setLoading());
 	axiosWithAuth()
-		.post("url", formVals)
+		.post("api/register", formVals)
 		.then((res) => {
 			dispatch(register(res.data.token));
 			dispatch(setLoading());
 		})
 		.catch((err) => {
+			console.log({ err });
 			dispatch(setAttemptMsg({}));
 			dispatch(setLoading());
 		});

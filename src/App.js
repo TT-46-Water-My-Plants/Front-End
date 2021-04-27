@@ -4,12 +4,13 @@ import { PrivateRoute } from "./PrivateRoute";
 
 import PlantForm from "./PlantForm";
 import RenderPlants from "./Renderplants";
+import Login from "./login";
 
 function App() {
 	return (
 		<Switch>
-			{/* <PrivateRoute path="/dashboard" component={RenderPlants} /> */}
-			<Route path="/dashboard" component={RenderPlants} />
+			<Route path="/login" component={Login} />
+			<PrivateRoute path="/dashboard" component={RenderPlants} />
 			<Route path="/newplant" component={PlantForm} />
 			<Route
 				path="/"
