@@ -21,10 +21,13 @@ function RenderPlants(props) {
 	const plantList = useSelector((state) => state.plants.plantList);
 	const dispatch = useDispatch();
 
+    useEffect(()=> {
+        dispatch(fetchPlants())
+    })
+
 	return (
 		<RenderBox>
 			<Info>
-				<img src="" alt="Plant"></img>
 				<p>Name: </p>
 				<p>Nickname: </p>
 				<p>Species: </p>
