@@ -35,3 +35,42 @@ function RenderPlants(props) {
 }
 
 export default RenderPlants;
+
+
+const Update = () => {
+    
+    return (
+        <form>
+            <div>
+                <p>Change details and submit changes</p>
+                <br />
+                <label className="label">
+                    <input
+                        name="password"
+                        type="password"
+                        // value={}
+                        // onChange={}
+                        placeholder="Password"
+                    />
+                </label>
+                <label className="label">
+                    <input
+                        name="phoneNumber"
+                        // value={}
+                        // onChange={}
+                        placeholder="(123)456-7890"
+                    />
+                </label>
+                <div className="submit">
+                    <button
+                        // onClick={}
+                        name="login"
+                        className="button"
+                    >
+                        Login
+                    </button>
+                </div>
+            </div>
+        </form>
+    )
+};
