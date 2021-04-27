@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { useForm } from "./hooks/useForm";
-import { authLogin, authRegister } from "./store/authLoginRegister";
+import { useForm } from "../hooks/useForm";
+import { authLogin, authRegister } from "../store/authLoginRegister";
 
 const initialFormValues = {
 	username: "",

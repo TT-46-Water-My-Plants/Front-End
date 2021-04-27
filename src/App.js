@@ -1,10 +1,10 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { PrivateRoute } from "./PrivateRoute";
 
-import PlantForm from "./PlantForm";
-import RenderPlants from "./Renderplants";
-import Login from "./login";
+import { PrivateRoute } from "./components/PrivateRoute";
+import PlantForm from "./components/PlantForm";
+import RenderPlants from "./components/Renderplants";
+import Login from "./components/login";
 
 function App() {
 	return (

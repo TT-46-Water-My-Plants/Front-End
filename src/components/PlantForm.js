@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useForm } from "./hooks/useForm";
+import { useForm } from "../hooks/useForm";
 
 const initialFormValues = {
 	id: "",
