@@ -10,11 +10,16 @@ const RenderBox = Styled.div`
     background-color: #49FCD4;
     width: 40%;
     margin: auto;
-    border-radius: 10%;
+    border-radius: 12%;
 `;
 const Info = Styled.div`
     color: #454848;
     font-weight: 4.5rem;
+`;
+const Buttons = Styled.button`
+    background-color: black;
+    color: white;
+    padding: 2%;
 `;
 
 function RenderPlants(props) {
@@ -23,16 +28,26 @@ function RenderPlants(props) {
 
     useEffect(()=> {
         dispatch(fetchPlants())
-    })
+    }, [])
+
+    useEffect(()=>{
+        dispatch(removePlant)
+    }, [])
+
+    useEffect(() => {
+        dispatch(editPlant)
+    }, [])
+    console.log(plantList);
 
 	return (
 		<RenderBox>
 			<Info>
-				<p>Name: </p>
-				<p>Nickname: </p>
-				<p>Species: </p>
-				<p>Watering Frequency: </p>
+			{plantList.map((plants) => {
+                return 
+            })}
 			</Info>
+            <Buttons>Remove Plant {removePlant} </Buttons>
+            <Buttons>Edit Plant {editPlant} </Buttons>
 		</RenderBox>
 	);
 }
