@@ -40,8 +40,12 @@ const Container = styled.div`
 `;
 
 const Login = () => {
-	const [formVals, changeFormVals] = useForm(initialFormValues);
-	const loggedIn = useSelector((state) => state.auth.loggedIn);
+	const [formVals, changeFormVals, clearFormVals] = useForm(
+		initialFormValues
+	);
+	const { loginSuccess, loginFailed, registerFailed } = useSelector(
+		(state) => state.auth.attemptMsg
+	);
 	const dispatch = useDispatch();
 	const { push } = useHistory();
 
@@ -53,12 +57,13 @@ const Login = () => {
 			dispatch(authLogin(formVals));
 		} else if (e.target.name === "register") {
 			dispatch(authRegister(formVals));
+			clearFormVals(initialFormValues);
 		}
 	};
 
 	useEffect(() => {
-		if (loggedIn) push("/dashboard");
-	}, [loggedIn]);
+		if (loginSuccess) push("/dashboard");
+	}, [loginSuccess]);
 
 	return (
 		<form>

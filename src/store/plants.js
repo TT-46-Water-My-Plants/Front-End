@@ -4,7 +4,7 @@ import { axiosWithAuth } from "../helper/axiosWithAuth";
 const slice = createSlice({
 	name: "plants",
 	initialState: {
-		list: [],
+		plantList: [],
 		loading: false,
 		error: "",
 	},
@@ -15,20 +15,20 @@ const slice = createSlice({
 		setError: (plants, action) => {
 			plants.error = action.payload;
 		},
-		loadPlants: (plants, action) => {
-			plants.list = action.payload;
+		plantsFetched: (plants, action) => {
+			plants.plantList = action.payload;
 		},
-		addPlant: (plants, action) => {
-			plants.list.push(action.payload);
+		plantAdded: (plants, action) => {
+			plants.plantList.push(action.payload);
 		},
-		editPlant: (plants, action) => {
-			plants.list.map((plant) => {
+		plantEdited: (plants, action) => {
+			plants.plantList.map((plant) => {
 				if (plant.id === action.payload.id) plant = action.payload;
 				return plant;
 			});
 		},
-		removePlant: (plants, action) => {
-			plants.list.filter((plant) => plant !== action.payload);
+		plantRemoved: (plants, action) => {
+			plants.plantList.filter((plant) => plant !== action.payload);
 		},
 	},
 });
@@ -36,24 +36,61 @@ const slice = createSlice({
 export const fetchPlants = () => (dispatch) => {
 	dispatch(setLoading());
 	axiosWithAuth()
-		.get("url")
+		.get("/api/plants")
 		.then((res) => {
-			dispatch(loadPlants(res.data));
+			dispatch(plantsFetched(res.data));
 			dispatch(setLoading());
 		})
 		.catch((err) => {
+			console.log({ err });
 			dispatch(setError("Unable to fetch plants."));
 			dispatch(setLoading());
+		});
+};
+
+export const addPlant = (newPlant) => (dispatch) => {
+	axiosWithAuth()
+		.post("/api/plants", newPlant)
+		.then((res) => {
+			dispatch(plantAdded(res.data));
+		})
+		.catch((err) => {
+			console.log({ err });
+			dispatch(setError("Unable to add plant."));
+		});
+};
+
+export const editPlant = (plant) => (dispatch) => {
+	axiosWithAuth()
+		.put(`/api/plants/${plant.id}`, plant)
+		.then((res) => {
+			dispatch(plantEdited(res.data));
+		})
+		.catch((err) => {
+			console.log({ err });
+			dispatch(setError("Unable to edit plant."));
+		});
+};
+
+export const removePlant = (plant) => (dispatch) => {
+	axiosWithAuth()
+		.delete(`/api/plants/${plant.plant_id}`)
+		.then((res) => {
+			dispatch(plantRemoved(plant));
+		})
+		.catch((err) => {
+			console.log({ err });
+			dispatch(setError("Unable to remove plant."));
 		});
 };
 
 export const {
 	setLoading,
 	setError,
-	loadPlants,
-	addPlant,
-	editPlant,
-	removePlant,
+	plantsFetched,
+	plantAdded,
+	plantEdited,
+	plantRemoved,
 } = slice.actions;
 
 export default slice.reducer;

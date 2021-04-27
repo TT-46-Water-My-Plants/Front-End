@@ -4,31 +4,30 @@ import { axiosWithAuth } from "../helper/axiosWithAuth";
 const slice = createSlice({
 	name: "auth",
 	initialState: {
-		loggedIn: false,
 		loading: false,
 		attemptMsg: {
-			success: true,
-			formValidationFailed: false,
-			incorrectCredentials: false,
-			userAlreadyExists: false,
+			loginSuccess: false,
+			loginFailed: false,
+			registerFailed: false,
 		},
 	},
 	reducers: {
 		setLoading: (auth) => {
 			auth.loading = !auth.loading;
 		},
-		setAttemptMsg: (auth) => {},
+		setAttemptMsg: (auth, action) => {
+			if (action.payload === "loginFailed")
+				auth.attemptMsg.loginFailed = true;
+			else if (action.payload === "registerFailed")
+				auth.attemptMsg.registerFailed = true;
+		},
 		login: (auth, action) => {
 			localStorage.setItem("token", action.payload);
-			auth.loggedIn = true;
-		},
-		register: (auth, action) => {
-			localStorage.setItem("token", action.payload);
-			auth.loggedIn = true;
+			auth.attemptMsg.loginSuccess = true;
 		},
 		logout: (auth) => {
 			localStorage.removeItem("token");
-			auth.loggedIn = false;
+			auth.attemptMsg.loginSuccess = false;
 		},
 	},
 });
@@ -43,7 +42,7 @@ export const authLogin = (formVals) => (dispatch) => {
 		})
 		.catch((err) => {
 			console.log({ err });
-			dispatch(setAttemptMsg({}));
+			dispatch(setAttemptMsg("loginFailed"));
 			dispatch(setLoading());
 		});
 };
@@ -53,12 +52,12 @@ export const authRegister = (formVals) => (dispatch) => {
 	axiosWithAuth()
 		.post("api/register", formVals)
 		.then((res) => {
-			dispatch(register(res.data.token));
+			dispatch(setAttemptMsg("success"));
 			dispatch(setLoading());
 		})
 		.catch((err) => {
 			console.log({ err });
-			dispatch(setAttemptMsg({}));
+			dispatch(setAttemptMsg("registerFailed"));
 			dispatch(setLoading());
 		});
 };
