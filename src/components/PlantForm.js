@@ -2,13 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
 
-const initialFormValues = {
-	id: "",
-	nickname: "",
-	species: "",
-	h2ofrequency: "",
-};
-
 const Form = styled.form`
 	box-sizing: border-box;
 	width: 100%;
@@ -34,6 +27,13 @@ const Form = styled.form`
 		color: white;
 	}
 `;
+
+const initialFormValues = {
+	id: "",
+	nickname: "",
+	species: "",
+	h2ofrequency: "",
+};
 
 function PlantForm() {
 	const [formVals, changeFormVals] = useForm(initialFormValues);

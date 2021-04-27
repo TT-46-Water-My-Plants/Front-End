@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
+import { useLogin } from "../hooks/useLogin";
 import { authLogin, authRegister } from "../store/authLoginRegister";
-
-const initialFormValues = {
-	username: "",
-	password: "",
-	phoneNumber: "",
-};
 
 const Container = styled.div`
 	background-image: url("https://images.unsplash.com/photo-1497990571654-77aa8ec36038?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1334&q=80");
@@ -39,41 +33,54 @@ const Container = styled.div`
 	}
 `;
 
+const initialFormValues = {
+	username: "",
+	password: "",
+	phoneNumber: "",
+};
+
 const Login = () => {
-	const [formVals, changeFormVals, clearFormVals] = useForm(
-		initialFormValues
-	);
-	const { loginSuccess, loginFailed, registerFailed } = useSelector(
-		(state) => state.auth.attemptMsg
-	);
 	const dispatch = useDispatch();
-	const { push } = useHistory();
+
+	const [formVals, handleChange, clearForm] = useForm(initialFormValues);
+
+	const attemptMsg = useLogin();
+
+	const { username, password, phoneNumber } = formVals;
+
+	const validate = () => {
+		return username === "" || password === "" || phoneNumber === ""
+			? false
+			: true;
+	};
 
 	const handleSubmit = (e) => {
 		e.persist();
 		e.preventDefault();
 
+		if (!validate()) {
+			clearForm();
+			return;
+		}
+
 		if (e.target.name === "login") {
 			dispatch(authLogin(formVals));
 		} else if (e.target.name === "register") {
 			dispatch(authRegister(formVals));
-			clearFormVals(initialFormValues);
+			clearForm();
 		}
 	};
-
-	useEffect(() => {
-		if (loginSuccess) push("/dashboard");
-	}, [loginSuccess]);
 
 	return (
 		<form>
 			<Container>
 				<h1>Welcome</h1>
+				<p>{attemptMsg}</p>
 				<label className="label">
 					<input
 						name="username"
-						value={formVals.username}
-						onChange={changeFormVals}
+						value={username}
+						handleChange={handleChange}
 						placeholder="Username"
 					/>
 				</label>
@@ -82,8 +89,8 @@ const Login = () => {
 					<input
 						name="password"
 						type="password"
-						value={formVals.password}
-						onChange={changeFormVals}
+						value={password}
+						handleChange={handleChange}
 						placeholder="Password"
 					/>
 				</label>
@@ -91,8 +98,8 @@ const Login = () => {
 				<label className="label">
 					<input
 						name="phoneNumber"
-						value={formVals.phoneNumber}
-						onChange={changeFormVals}
+						value={phoneNumber}
+						handleChange={handleChange}
 						placeholder="(123)456-7890"
 					/>
 				</label>

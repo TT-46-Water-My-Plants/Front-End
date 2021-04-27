@@ -5,29 +5,22 @@ const slice = createSlice({
 	name: "auth",
 	initialState: {
 		loading: false,
-		attemptMsg: {
-			loginSuccess: false,
-			loginFailed: false,
-			registerFailed: false,
-		},
+		attemptMsg: "",
 	},
 	reducers: {
 		setLoading: (auth) => {
 			auth.loading = !auth.loading;
 		},
 		setAttemptMsg: (auth, action) => {
-			if (action.payload === "loginFailed")
-				auth.attemptMsg.loginFailed = true;
-			else if (action.payload === "registerFailed")
-				auth.attemptMsg.registerFailed = true;
+			auth.attemptMsg = action.payload;
 		},
 		login: (auth, action) => {
 			localStorage.setItem("token", action.payload);
-			auth.attemptMsg.loginSuccess = true;
+			auth.attemptMsg = "loginSuccess";
 		},
 		logout: (auth) => {
 			localStorage.removeItem("token");
-			auth.attemptMsg.loginSuccess = false;
+			auth.attemptMsg = "";
 		},
 	},
 });
@@ -52,7 +45,7 @@ export const authRegister = (formVals) => (dispatch) => {
 	axiosWithAuth()
 		.post("api/register", formVals)
 		.then((res) => {
-			dispatch(setAttemptMsg("success"));
+			dispatch(setAttemptMsg("registerSuccess"));
 			dispatch(setLoading());
 		})
 		.catch((err) => {
@@ -62,12 +55,6 @@ export const authRegister = (formVals) => (dispatch) => {
 		});
 };
 
-export const {
-	setLoading,
-	setAttemptMsg,
-	login,
-	register,
-	logout,
-} = slice.actions;
+export const { setLoading, setAttemptMsg, login, logout } = slice.actions;
 
 export default slice.reducer;

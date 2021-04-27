@@ -7,8 +7,10 @@ export const useForm = (initFormVals) => {
 		setFormValues({ ...formValues, [e.target.name]: e.target.value });
 	};
 
-	const onClear = (clearedFormVals) => {
-		setFormValues(clearedFormVals);
+	const emptyForm = initFormVals;
+
+	const onClear = () => {
+		setFormValues(emptyForm);
 	};
 
 	return [formValues, onChange, onClear];
