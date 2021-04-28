@@ -38,29 +38,34 @@ const Info = Styled.div`
     }
 `;
 
+
 function RenderPlants(props) {
 	const plantList = useSelector((state) => state.plants.plantList);
 	const dispatch = useDispatch();
 
+    
 	useEffect(() => {
 		dispatch(fetchPlants());
 	}, []);
 console.log(testData);
+
 	return (
 		<RenderBox>
 			<Info>
                 {testData.map((plant) => {
+                    
+
 					return (
-						<div>
+						<div key ={plant.id}>
 							<h4>{plant.species}</h4>
 							<h5>{plant.nickname}</h5>
 							<h5>{plant.h2oFrequency}</h5>
 							<div className="button-con">
-								<button className="remove-plant">
+								<button removeplant={`removePlant`} className="remove-plant">
 									{" "}
 									Remove Plant{" "}
 								</button>
-								<button className="edit-plant">
+								<button editplant={`editPlant`} className="edit-plant">
 									Edit Plant
 								</button>
 							</div>
