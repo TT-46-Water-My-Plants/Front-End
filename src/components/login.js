@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
 import { useLogin } from "../hooks/useLogin";
-import { authLogin, authRegister } from "../store/authLoginRegister";
+import { userLogin, userRegister } from "../store/user";
 
 const Container = styled.div`
 	background-image: url("https://images.unsplash.com/photo-1497990571654-77aa8ec36038?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1334&q=80");
@@ -33,7 +33,7 @@ const Container = styled.div`
 	}
 `;
 
-const initialFormValues = {
+export const initialFormValues = {
 	username: "",
 	password: "",
 	phoneNumber: "",
@@ -64,9 +64,9 @@ const Login = () => {
 		}
 
 		if (e.target.name === "login") {
-			dispatch(authLogin(formVals));
+			dispatch(userLogin(formVals));
 		} else if (e.target.name === "register") {
-			dispatch(authRegister(formVals));
+			dispatch(userRegister(formVals));
 			clearForm();
 		}
 	};

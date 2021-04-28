@@ -1,6 +1,10 @@
-import React from 'react'
-import styled from 'styled-components'
-
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import styled from "styled-components";
+import { useForm } from "../hooks/useForm";
+import { editUser } from "../store/user";
+import { initialFormValues } from "./login";
 
 const UpdateDiv = styled.div`
 	background-image: url("https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
@@ -19,73 +23,121 @@ const UpdateDiv = styled.div`
 	}
 
 	.button {
-		display: inline-block;
-        border-radius: 4px;
-        background-color: #deb887;
-        border: none;
-        color: #FFFFFF;
-        text-align: center;
-        font-size: 28px;
-        padding: ;
-        width: 140px;
-        transition: all 0.5s;
-        cursor: pointer;
-        height: 5vh;
+		display: block;
+		border-radius: 4px;
+		background-color: #deb887;
+		border: none;
+		color: #ffffff;
+		text-align: center;
+		font-size: 28px;
+		width: 140px;
+		transition: all 0.5s;
+		cursor: pointer;
+		height: 5vh;
 	}
 
 	.button:hover {
 		background-color: #60a362; /* Green */
-        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+		box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+			0 17px 50px 0 rgba(0, 0, 0, 0.19);
 		color: white;
 	}
 
-    .paragraph {
-        margin: -1%;
-        color: #deb887;
-        font-size: 3rem;
-        font-family: 'Jomhuria', cursive;
-    }
+	.paragraph {
+		margin: -1%;
+		color: #deb887;
+		font-size: 3rem;
+		font-family: "Jomhuria", cursive;
+	}
 `;
-
-
-
 const Update = () => {
-    
-    return (
-        <form>
-            <UpdateDiv>
-                <p className ='paragraph'>Enter new password and or phone number</p>
-                <br />
-                <label className="label">
-                    <input
-                        name="password"
-                        type="password"
-                        // value={}
-                        // onChange={}
-                        placeholder="password"
-                    />
-                </label>
-                <br />
-                <label className="label">
-                    <input
-                        name="phoneNumber"
-                        // value={}
-                        // onChange={}
-                        placeholder="(xxx)xxx-xxxx"
-                    />
-                </label>
-                <br />
-                <div className="submit">
-                    <button 
-                        // onClick={}
-                        name="submit"
-                        className="button"
-                    >
-                        Save
-                    </button>
-                </div>
-            </UpdateDiv>
-        </form>
-    )
+	const [formVals, handleChange, clearForm] = useForm(initialFormValues);
+
+	const dispatch = useDispatch();
+
+	const { push } = useHistory();
+
+	const handleClick = (e) => {
+		push("/dashboard");
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (password === "") {
+			document.querySelector(".paragraph").textContent = "Missing Field!";
+			clearForm();
+			return;
+		} else if (username === "" && phoneNumber === "") {
+			dispatch(editUser({ password }));
+			push("/dashboard");
+			return;
+		} else if (username === "" || phoneNumber === "") {
+			if (username === "") {
+				dispatch(editUser({ password, phoneNumber }));
+				push("/dashboard");
+				return;
+			}
+			if (phoneNumber === "") {
+				dispatch(editUser({ password, username }));
+				push("/dashboard");
+				return;
+			}
+		}
+		dispatch(editUser(formVals));
+		push("/dashboard");
+	};
+
+	const { username, password, phoneNumber } = formVals;
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<UpdateDiv>
+				<p className="paragraph">Only Password Required:</p>
+				<br />
+				<label className="label">
+					<input
+						name="username"
+						value={username}
+						onChange={handleChange}
+						placeholder="username"
+					/>
+				</label>
+				<br />
+				<label className="label">
+					<input
+						name="password"
+						type="password"
+						value={password}
+						onChange={handleChange}
+						placeholder="password"
+					/>
+				</label>
+				<br />
+				<label className="label">
+					<input
+						name="phoneNumber"
+						value={phoneNumber}
+						onChange={handleChange}
+						placeholder="(xxx)xxx-xxxx"
+					/>
+				</label>
+				<br />
+				<div className="submit">
+					<button name="submit" className="button">
+						Save
+					</button>
+					<button
+						type="button"
+						style={{ marginTop: "15%" }}
+						onClick={handleClick}
+						name="cancel"
+						className="button"
+					>
+						Cancel
+					</button>
+				</div>
+			</UpdateDiv>
+		</form>
+	);
 };
- export default Update
+export default Update;

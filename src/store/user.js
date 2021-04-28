@@ -2,35 +2,38 @@ import { createSlice } from "@reduxjs/toolkit";
 import { axiosWithAuth } from "../helper/axiosWithAuth";
 
 const slice = createSlice({
-	name: "auth",
+	name: "user",
 	initialState: {
+		welcomeMessage: "",
 		loading: false,
 		attemptMsg: "",
 	},
 	reducers: {
-		setLoading: (auth) => {
-			auth.loading = !auth.loading;
+		setLoading: (user) => {
+			user.loading = !user.loading;
 		},
-		setAttemptMsg: (auth, action) => {
-			auth.attemptMsg = action.payload;
+		setAttemptMsg: (user, action) => {
+			user.attemptMsg = action.payload;
 		},
-		login: (auth, action) => {
-			localStorage.setItem("token", action.payload);
-			auth.attemptMsg = "loginSuccess";
+		login: (user, action) => {
+			user.welcomeMessage = action.payload.message;
+			localStorage.setItem("token", action.payload.token);
 		},
-		logout: (auth) => {
+		logout: (user) => {
+			user.welcomeMessage = "";
 			localStorage.removeItem("token");
-			auth.attemptMsg = "";
+			user.attemptMsg = "";
 		},
 	},
 });
 
-export const authLogin = (formVals) => (dispatch) => {
+export const userLogin = (formVals) => (dispatch) => {
 	dispatch(setLoading());
 	axiosWithAuth()
 		.post("api/login", formVals)
 		.then((res) => {
-			dispatch(login(res.data.token));
+			dispatch(login(res.data));
+			dispatch(setAttemptMsg("loginSuccess"));
 			dispatch(setLoading());
 		})
 		.catch((err) => {
@@ -40,7 +43,7 @@ export const authLogin = (formVals) => (dispatch) => {
 		});
 };
 
-export const authRegister = (formVals) => (dispatch) => {
+export const userRegister = (formVals) => (dispatch) => {
 	dispatch(setLoading());
 	axiosWithAuth()
 		.post("api/register", formVals)
@@ -51,6 +54,21 @@ export const authRegister = (formVals) => (dispatch) => {
 		.catch((err) => {
 			console.log({ err });
 			dispatch(setAttemptMsg("registerFailed"));
+			dispatch(setLoading());
+		});
+};
+
+export const editUser = (fields) => (dispatch) => {
+	dispatch(setLoading());
+	axiosWithAuth()
+		.put("/api/user", fields)
+		.then((res) => {
+			dispatch(setAttemptMsg("updateUserSuccess"));
+			dispatch(setLoading());
+		})
+		.catch((err) => {
+			console.log({ err });
+			dispatch(setAttemptMsg("updateUserFailed"));
 			dispatch(setLoading());
 		});
 };

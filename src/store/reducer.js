@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import plantReducer from "./plants";
-import authReducer from "./authLoginRegister";
+import userReducer from "./user";
 
 export default combineReducers({
 	plants: plantReducer,
-	auth: authReducer,
+	user: userReducer,
 });

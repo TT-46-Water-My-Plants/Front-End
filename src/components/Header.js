@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { logout } from "../store/authLoginRegister";
+import { logout } from "../store/user";
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -14,6 +14,8 @@ const Header = () => {
 		} else if (e.target.name === "logoutBtn") {
 			dispatch(logout());
 			push("/login");
+		} else if (e.target.name === "editUser") {
+			push("/edituser");
 		}
 	};
 
@@ -25,6 +27,13 @@ const Header = () => {
 				className="btn-newplant"
 			>
 				Add New Plant
+			</button>
+			<button
+				name="editUser"
+				onClick={handleClick}
+				className="btn-logout"
+			>
+				Edit User
 			</button>
 			<button
 				name="logoutBtn"

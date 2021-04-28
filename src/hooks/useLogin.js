@@ -7,7 +7,7 @@ export const useLogin = () => {
 
 	const { push } = useHistory();
 
-	const attemptMsg = useSelector((state) => state.auth.attemptMsg);
+	const attemptMsg = useSelector((state) => state.user.attemptMsg);
 
 	useEffect(() => {
 		switch (attemptMsg) {
