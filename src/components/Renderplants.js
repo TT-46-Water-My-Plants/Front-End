@@ -45,11 +45,11 @@ function RenderPlants(props) {
 	useEffect(() => {
 		dispatch(fetchPlants());
 	}, []);
-
+console.log(testData);
 	return (
 		<RenderBox>
 			<Info>
-				{testData.map((plant) => {
+                {testData.map((plant) => {
 					return (
 						<div>
 							<h4>{plant.species}</h4>
