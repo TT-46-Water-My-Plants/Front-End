@@ -49,9 +49,7 @@ const Login = () => {
 	const { username, password, phoneNumber } = formVals;
 
 	const validate = () => {
-		return username === "" || password === "" || phoneNumber === ""
-			? false
-			: true;
+		return username === "" || password === "" ? false : true;
 	};
 
 	const handleSubmit = (e) => {
@@ -100,7 +98,7 @@ const Login = () => {
 						name="phoneNumber"
 						value={phoneNumber}
 						onChange={handleChange}
-						placeholder="(123)456-7890"
+						placeholder="Only if registering!"
 					/>
 				</label>
 				<br />
