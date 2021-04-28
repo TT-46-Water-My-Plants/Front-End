@@ -52,12 +52,13 @@ const Login = () => {
 		return username === "" || password === "" ? false : true;
 	};
 
-	const handleSubmit = (e) => {
+	const handleClick = (e) => {
 		e.persist();
 		e.preventDefault();
 
 		if (!validate()) {
 			clearForm();
+			document.querySelector("h1").textContent = "Missing Field!";
 			return;
 		}
 
@@ -104,14 +105,14 @@ const Login = () => {
 				<br />
 				<div className="submit">
 					<button
-						onClick={handleSubmit}
+						onClick={handleClick}
 						name="login"
 						className="button"
 					>
 						Login
 					</button>
 					<button
-						onClick={handleSubmit}
+						onClick={handleClick}
 						name="register"
 						className="button"
 					>
