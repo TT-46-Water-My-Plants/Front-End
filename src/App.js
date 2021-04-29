@@ -14,6 +14,7 @@ function App() {
 			<Route path="/newplant" component={PlantForm} />
 			<Route path="/edituser" component={Update} />
 			<Route
+				exact
 				path="/"
 				component={() => {
 					window.location.href =

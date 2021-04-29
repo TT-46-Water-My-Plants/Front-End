@@ -19,7 +19,7 @@ const slice = createSlice({
 			plants.plantList = action.payload;
 		},
 		plantAdded: (plants, action) => {
-			plants.plantList = plants.plantList.push(action.payload);
+			plants.plantList.push(action.payload);
 		},
 		plantEdited: (plants, action) => {
 			plants.plantList = plants.plantList.map((plant) => {
