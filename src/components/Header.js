@@ -22,6 +22,15 @@ const Header = () => {
 	return (
 		<header className="header">
 			<button
+				className="btn-newplant"
+				onClick={() =>
+					(window.location.href =
+						"https://marketing-page-tt46.vercel.app/")
+				}
+			>
+				Home Page
+			</button>
+			<button
 				name="newPlantBtn"
 				onClick={handleClick}
 				className="btn-newplant"
