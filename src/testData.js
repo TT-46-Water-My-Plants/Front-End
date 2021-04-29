@@ -60,3 +60,5 @@ const data = [
 		h2oFrequency: 1,
 	},
 ];
+
+export default data;
