@@ -7,8 +7,6 @@ import Login from "./components/login";
 import Update from "./components/UpdateInfo";
 
 function App() {
-	const { push } = useHistory();
-
 	return (
 		<Switch>
 			<Route path="/login" component={Login} />
