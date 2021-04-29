@@ -16,10 +16,6 @@ function App() {
 			<Route
 				path="/"
 				component={() => {
-					if (localStorage.getItem("token")) {
-						window.location.href =
-							"https://water-my-plants-tt46.vercel.app/dashboard";
-					}
 					window.location.href =
 						"https://marketing-page-tt46.vercel.app/";
 				}}
