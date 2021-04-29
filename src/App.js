@@ -1,10 +1,10 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-
 import { PrivateRoute } from "./components/PrivateRoute";
 import PlantForm from "./components/PlantForm";
 import RenderPlants from "./components/Renderplants";
 import Login from "./components/login";
+import Update from "./components/UpdateInfo";
 
 function App() {
 	return (
@@ -12,6 +12,7 @@ function App() {
 			<Route path="/login" component={Login} />
 			<PrivateRoute path="/dashboard" component={RenderPlants} />
 			<Route path="/newplant" component={PlantForm} />
+			<Route path="/edituser" component={Update} />
 			<Route
 				path="/"
 				component={() => {

@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchPlants } from "../store/plants";
 import Styled from "styled-components";
-import { fetchPlants, addPlant, removePlant, editPlant } from "../store/plants";
-import testData from "../testData";
+import Header from "./Header";
 
 const RenderBox = Styled.div`
     display: flex;
@@ -38,34 +38,35 @@ const Info = Styled.div`
     }
 `;
 
-
 function RenderPlants(props) {
 	const plantList = useSelector((state) => state.plants.plantList);
 	const dispatch = useDispatch();
 
-    
 	useEffect(() => {
 		dispatch(fetchPlants());
 	}, []);
-console.log(testData);
 
 	return (
 		<RenderBox>
 			<Info>
-                {testData.map((plant) => {
-                    
-
+				{plantList.map((plant) => {
 					return (
-						<div key ={plant.id}>
+						<div key={plant.id}>
 							<h4>{plant.species}</h4>
 							<h5>{plant.nickname}</h5>
 							<h5>{plant.h2oFrequency}</h5>
 							<div className="button-con">
-								<button removeplant={`removePlant`} className="remove-plant">
+								<button
+									removeplant={`removePlant`}
+									className="remove-plant"
+								>
 									{" "}
 									Remove Plant{" "}
 								</button>
-								<button editplant={`editPlant`} className="edit-plant">
+								<button
+									editplant={`editPlant`}
+									className="edit-plant"
+								>
 									Edit Plant
 								</button>
 							</div>

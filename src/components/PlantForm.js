@@ -1,13 +1,7 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
-
-const initialFormValues = {
-	id: "",
-	nickname: "",
-	species: "",
-	h2ofrequency: "",
-};
 
 const Form = styled.form`
 	box-sizing: border-box;
@@ -35,8 +29,22 @@ const Form = styled.form`
 	}
 `;
 
+const initialFormValues = {
+	id: "",
+	nickname: "",
+	species: "",
+	h2ofrequency: "",
+};
+
 function PlantForm() {
-	const [formVals, changeFormVals] = useForm(initialFormValues);
+	const [formVals, handleChange, clearForm] = useForm(initialFormValues);
+
+	const { push } = useHistory();
+
+	const handleClick = (e) => {
+		clearForm();
+		push("/dashboard");
+	};
 
 	return (
 		<Form>
@@ -46,7 +54,7 @@ function PlantForm() {
 					<input
 						type="text"
 						value={formVals.id}
-						onChange={changeFormVals}
+						onChange={(handleChange, clearForm)}
 						name="id"
 						placeholder="please enter ID here"
 					/>
@@ -57,7 +65,7 @@ function PlantForm() {
 					<input
 						type="text"
 						value={formVals.nickname}
-						onChange={changeFormVals}
+						onChange={(handleChange, clearForm)}
 						name="nickname"
 						placeholder="type a nickname here"
 					/>
@@ -68,7 +76,7 @@ function PlantForm() {
 					<input
 						type="text"
 						value={formVals.species}
-						onChange={changeFormVals}
+						onChange={(handleChange, clearForm)}
 						name="species"
 						placeholder="input species here"
 					/>
@@ -79,7 +87,7 @@ function PlantForm() {
 					<input
 						type="text"
 						value={formVals.h2ofrequency}
-						onChange={changeFormVals}
+						onChange={(handleChange, clearForm)}
 						name="h2ofrequency"
 						placeholder="input frequency here"
 					/>
@@ -87,6 +95,13 @@ function PlantForm() {
 
 				<div className="submit">
 					<button className="btn-submit">Submit</button>
+					<button
+						type="button"
+						onClick={handleClick}
+						className="btn-submit"
+					>
+						Cancel
+					</button>
 				</div>
 			</div>
 		</Form>

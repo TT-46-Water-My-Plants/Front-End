@@ -1,15 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
-import { authLogin, authRegister } from "../store/authLoginRegister";
-
-const initialFormValues = {
-	username: "",
-	password: "",
-	phoneNumber: "",
-};
+import { useLogin } from "../hooks/useLogin";
+import { userLogin, userRegister } from "../store/user";
 
 const Container = styled.div`
 	background-image: url("https://images.unsplash.com/photo-1497990571654-77aa8ec36038?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1334&q=80");
@@ -39,41 +33,53 @@ const Container = styled.div`
 	}
 `;
 
-const Login = () => {
-	const [formVals, changeFormVals, clearFormVals] = useForm(
-		initialFormValues
-	);
-	const { loginSuccess, loginFailed, registerFailed } = useSelector(
-		(state) => state.auth.attemptMsg
-	);
-	const dispatch = useDispatch();
-	const { push } = useHistory();
+export const initialFormValues = {
+	username: "",
+	password: "",
+	phoneNumber: "",
+};
 
-	const handleSubmit = (e) => {
+const Login = () => {
+	const dispatch = useDispatch();
+
+	const [formVals, handleChange, clearForm] = useForm(initialFormValues);
+
+	const attemptMsg = useLogin();
+
+	const { username, password, phoneNumber } = formVals;
+
+	const validate = () => {
+		return username === "" || password === "" ? false : true;
+	};
+
+	const handleClick = (e) => {
 		e.persist();
 		e.preventDefault();
 
+		if (!validate()) {
+			clearForm();
+			document.querySelector("h1").textContent = "Missing Field!";
+			return;
+		}
+
 		if (e.target.name === "login") {
-			dispatch(authLogin(formVals));
+			dispatch(userLogin(formVals));
 		} else if (e.target.name === "register") {
-			dispatch(authRegister(formVals));
-			clearFormVals(initialFormValues);
+			dispatch(userRegister(formVals));
+			clearForm();
 		}
 	};
-
-	useEffect(() => {
-		if (loginSuccess) push("/dashboard");
-	}, [loginSuccess]);
 
 	return (
 		<form>
 			<Container>
 				<h1>Welcome</h1>
+				<p>{attemptMsg}</p>
 				<label className="label">
 					<input
 						name="username"
-						value={formVals.username}
-						onChange={changeFormVals}
+						value={username}
+						onChange={handleChange}
 						placeholder="Username"
 					/>
 				</label>
@@ -82,8 +88,8 @@ const Login = () => {
 					<input
 						name="password"
 						type="password"
-						value={formVals.password}
-						onChange={changeFormVals}
+						value={password}
+						onChange={handleChange}
 						placeholder="Password"
 					/>
 				</label>
@@ -91,22 +97,22 @@ const Login = () => {
 				<label className="label">
 					<input
 						name="phoneNumber"
-						value={formVals.phoneNumber}
-						onChange={changeFormVals}
-						placeholder="(123)456-7890"
+						value={phoneNumber}
+						onChange={handleChange}
+						placeholder="Only if registering!"
 					/>
 				</label>
 				<br />
 				<div className="submit">
 					<button
-						onClick={handleSubmit}
+						onClick={handleClick}
 						name="login"
 						className="button"
 					>
 						Login
 					</button>
 					<button
-						onClick={handleSubmit}
+						onClick={handleClick}
 						name="register"
 						className="button"
 					>
