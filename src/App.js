@@ -19,7 +19,8 @@ function App() {
 				path="/"
 				component={() => {
 					if (localStorage.getItem("token")) {
-						push("/dashboard");
+						window.location.href =
+							"https://marketing-page-tt46.vercel.app/dashboard";
 					}
 					window.location.href =
 						"https://marketing-page-tt46.vercel.app/";
