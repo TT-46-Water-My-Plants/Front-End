@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { PrivateRoute } from "./components/PrivateRoute";
 import PlantForm from "./components/PlantForm";
 import RenderPlants from "./components/Renderplants";
