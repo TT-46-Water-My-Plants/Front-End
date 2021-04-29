@@ -22,13 +22,16 @@ const slice = createSlice({
 			plants.plantList.push(action.payload);
 		},
 		plantEdited: (plants, action) => {
-			plants.plantList.map((plant) => {
-				if (plant.id === action.payload.id) plant = action.payload;
-				return plant;
+			plants.plantList = plants.plantList.map((plant) => {
+				return plant.plant_id === action.payload.plant_id
+					? action.payload
+					: plant;
 			});
 		},
 		plantRemoved: (plants, action) => {
-			plants.plantList.filter((plant) => plant !== action.payload);
+			plants.plantList = plants.plantList.filter(
+				(plant) => plant.plant_id !== action.payload.plant_id
+			);
 		},
 	},
 });
@@ -60,9 +63,9 @@ export const addPlant = (newPlant) => (dispatch) => {
 		});
 };
 
-export const editPlant = (plant) => (dispatch) => {
+export const editPlant = (id, plant) => (dispatch) => {
 	axiosWithAuth()
-		.put(`/api/plants/${plant.id}`, plant)
+		.put(`/api/plants/${id}`, plant)
 		.then((res) => {
 			dispatch(plantEdited(res.data));
 		})

@@ -1,7 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useForm } from "../hooks/useForm";
+import { addPlant } from "../store/plants";
 
 const Form = styled.form`
 	box-sizing: border-box;
@@ -29,66 +31,75 @@ const Form = styled.form`
 	}
 `;
 
-const initialFormValues = {
-	id: "",
+export const initialFormValues = {
 	nickname: "",
 	species: "",
-	h2ofrequency: "",
+	h2oFrequency: "",
 };
 
 function PlantForm() {
 	const [formVals, handleChange, clearForm] = useForm(initialFormValues);
 
+	const dispatch = useDispatch();
 	const { push } = useHistory();
 
-	const handleClick = (e) => {
+	const handleCancel = (e) => {
 		clearForm();
 		push("/dashboard");
 	};
 
+	const validate = () => {
+		return nickname === "" || species === "" || h2oFrequency === ""
+			? false
+			: true;
+	};
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (validate()) {
+			dispatch(addPlant(formVals));
+			push("/dashboard");
+		} else {
+			clearForm();
+			document
+				.querySelectorAll("input")
+				.forEach((i) => (i.placeholder = "Missing Field?"));
+		}
+	};
+
+	const { nickname, species, h2oFrequency } = formVals;
+
 	return (
-		<Form>
+		<Form onSubmit={handleSubmit}>
 			<div className="container form inputs">
-				<label>
-					Id
-					<input
-						type="text"
-						value={formVals.id}
-						onChange={(handleChange, clearForm)}
-						name="id"
-						placeholder="please enter ID here"
-					/>
-				</label>
-
-				<label>
-					Nickname
-					<input
-						type="text"
-						value={formVals.nickname}
-						onChange={(handleChange, clearForm)}
-						name="nickname"
-						placeholder="type a nickname here"
-					/>
-				</label>
-
 				<label>
 					Species
 					<input
 						type="text"
 						value={formVals.species}
-						onChange={(handleChange, clearForm)}
+						onChange={handleChange}
 						name="species"
 						placeholder="input species here"
 					/>
 				</label>
-
+				<label>
+					Nickname
+					<input
+						type="text"
+						value={formVals.nickname}
+						onChange={handleChange}
+						name="nickname"
+						placeholder="type a nickname here"
+					/>
+				</label>
 				<label>
 					H20 Frequency
 					<input
 						type="text"
-						value={formVals.h2ofrequency}
-						onChange={(handleChange, clearForm)}
-						name="h2ofrequency"
+						value={formVals.h2oFrequency}
+						onChange={handleChange}
+						name="h2oFrequency"
 						placeholder="input frequency here"
 					/>
 				</label>
@@ -97,7 +108,7 @@ function PlantForm() {
 					<button className="btn-submit">Submit</button>
 					<button
 						type="button"
-						onClick={handleClick}
+						onClick={handleCancel}
 						className="btn-submit"
 					>
 						Cancel
