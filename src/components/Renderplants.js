@@ -51,6 +51,7 @@ function RenderPlants(props) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		window.location.reload();
 		dispatch(fetchPlants());
 	}, []);
 
