@@ -16,6 +16,7 @@ function App() {
 			<Route
 				path="/"
 				component={() => {
+					if (localStorage.getItem("token")) return <RenderPlants />;
 					window.location.href =
 						"https://marketing-page-tt46.vercel.app/";
 				}}
